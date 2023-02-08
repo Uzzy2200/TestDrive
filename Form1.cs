@@ -15,25 +15,19 @@ namespace TestDrive
     {
         RepoDB repoDB;
         Bitmap bitmap;
-        SqlConnection sqlConn = new SqlConnection();
-        SqlCommand sqlCmd = new SqlCommand();
         DataTable sqlDt = new DataTable();
-        String sqlQuery;
-        SqlDataAdapter Dta = new SqlDataAdapter();
-        SqlDataReader sqlRd;
-        DataSet ds = new DataSet();
-        private readonly string _connectionString = @"Server=tcp:drivingserver.database.windows.net,1433;Initial Catalog=DriverDB;Persist Security Info=False;User ID=Usama;Password=Ab123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
- 
+        //private readonly string _connectionString = @"Server=tcp:drivingserver.database.windows.net,1433;Initial Catalog=DriverDB;Persist Security Info=False;User ID=Usama;Password=Ab123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        
         public Form1()
         {
             InitializeComponent();
             repoDB = new RepoDB();
-
+            UploadData();
         }
         private void UploadData()
         {
             //repoDB.Hent();
-
+            dataGridView2.DataSource = repoDB.Hent();
         }
         private void button6_Click(object sender, EventArgs e)
         {
@@ -101,16 +95,50 @@ namespace TestDrive
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            var p = new Log() { /*Id = int.Parse(textBox1.Text)*/ Numberplate = Numberplate.Text, Opgave = Opgave.Text, KMBeforeShift = int.Parse(KMBeforeShift.Text), KMAfterShift = int.Parse(KMAfterShift.Text) };
-            repoDB.Create(p);
+            DialogResult iCreate;
+            try
+            {
+                iCreate = MessageBox.Show("Confirm if u want to create log", "TestDrive", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (iCreate == DialogResult.Yes)
+                {
+                    var p = new Log() { Numberplate = Numberplate.Text, Opgave = Opgave.Text, KMBeforeShift = int.Parse(KMBeforeShift.Text), KMAfterShift = int.Parse(KMAfterShift.Text) };
+                    repoDB.Create(p);
+                    UploadData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            foreach (Control c in panel4.Controls)
+            {
+                if (c is TextBox)
+                    ((TextBox)c).Clear();
+            }
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            var o = new Opdatere() { /*Id = int.Parse(textBox1.Text)*/ Numberplate = Numberplate.Text, Opgave = Opgave.Text, KMBeforeShift = int.Parse(KMBeforeShift.Text), KMAfterShift = int.Parse(KMAfterShift.Text) };
-
-            repoDB.Update(o);
+            DialogResult iUpdate;
+            try
+            {
+                iUpdate = MessageBox.Show("Confirm if u want to Update log", "TestDrive", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (iUpdate == DialogResult.Yes)
+                {
+                    var o = new Opdatere() { Numberplate = Numberplate.Text, Opgave = Opgave.Text, KMBeforeShift = int.Parse(KMBeforeShift.Text), KMAfterShift = int.Parse(KMAfterShift.Text), Id = int.Parse(CarId.Text) };
+                    repoDB.Update(o);
+                    UploadData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            foreach (Control c in panel4.Controls)
+            {
+                if (c is TextBox)
+                    ((TextBox)c).Clear();
+            }
         }
-       
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -126,10 +154,71 @@ namespace TestDrive
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void Numberplate_TextChanged(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
+            DialogResult iDelete;
+            try
+            {
+                iDelete = MessageBox.Show("Confirm if u want to delete log", "TestDrive", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (iDelete == DialogResult.Yes)
+                {
+                    var d = new Deletee() { Id = int.Parse(CarId.Text) ,Numberplate = Numberplate.Text, Opgave = Opgave.Text, KMBeforeShift = int.Parse(KMBeforeShift.Text), KMAfterShift = int.Parse(KMAfterShift.Text) };
+                    repoDB.Delete(d);
+                    UploadData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
+            foreach (Control c in panel4.Controls)
+            {
+                if (c is TextBox)
+                    ((TextBox)c).Clear();
+            }
+            UploadData();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form2 f2 = new Form2();
+            f2.ShowDialog();
+        }
+        private void Search_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            dataGridView2.DataSource = repoDB.SearchLog();
+            var s = new SearchFunction() { Numberplate = Numberplate.Text };
+            repoDB.SearchLog(s);
+            SearchData();
+            //repoDB.SearchLog();
+            //try
+            //{
+            //    DataView dv = sqlDt.DefaultView;
+            //    dv.RowFilter = string.Format("Numberplate like '%{0}%'", txtSearch.Text);
+            //    dataGridView2.DataSource = dv.ToTable();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+            //if (e.KeyChar == (char)Keys.Enter)
+            //{
+            //    string searchTerm = txtSearch.Text;
+
+            //    using (var context = new DriverDB())
+            //    {
+            //        var results = context.YourTable.Where(x => x.Name.Contains(searchTerm)).ToList();
+
+            //        dataGridView2.DataSource = results;
+            //    }
+            //}
+        }
+        private void SearchData()
+        {
+            
+            dataGridView2.DataSource = repoDB.SearchLog();
         }
     }
 }

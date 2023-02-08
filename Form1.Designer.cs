@@ -33,8 +33,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.button7 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button6 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -43,6 +42,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.CarId = new System.Windows.Forms.TextBox();
             this.Numberplate = new System.Windows.Forms.TextBox();
@@ -59,7 +59,6 @@
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -80,14 +79,14 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(14, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(948, 88);
+            this.panel2.Size = new System.Drawing.Size(948, 97);
             this.panel2.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F);
-            this.label1.Location = new System.Drawing.Point(315, 0);
+            this.label1.Location = new System.Drawing.Point(319, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(306, 73);
             this.label1.TabIndex = 0;
@@ -96,7 +95,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel3.Controls.Add(this.panel6);
+            this.panel3.Controls.Add(this.button7);
             this.panel3.Controls.Add(this.panel5);
             this.panel3.Controls.Add(this.panel4);
             this.panel3.Location = new System.Drawing.Point(12, 131);
@@ -104,22 +103,15 @@
             this.panel3.Size = new System.Drawing.Size(974, 347);
             this.panel3.TabIndex = 1;
             // 
-            // panel6
+            // button7
             // 
-            this.panel6.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.panel6.Controls.Add(this.textBox5);
-            this.panel6.Location = new System.Drawing.Point(747, 3);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(215, 72);
-            this.panel6.TabIndex = 3;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(18, 7);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(177, 43);
-            this.textBox5.TabIndex = 6;
+            this.button7.Location = new System.Drawing.Point(765, 8);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(177, 62);
+            this.button7.TabIndex = 3;
+            this.button7.Text = "Driver Management";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // panel5
             // 
@@ -130,9 +122,9 @@
             this.panel5.Controls.Add(this.button4);
             this.panel5.Controls.Add(this.button3);
             this.panel5.Controls.Add(this.button2);
-            this.panel5.Location = new System.Drawing.Point(747, 95);
+            this.panel5.Location = new System.Drawing.Point(747, 91);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(215, 237);
+            this.panel5.Size = new System.Drawing.Size(215, 241);
             this.panel5.TabIndex = 2;
             // 
             // button6
@@ -183,6 +175,7 @@
             this.button3.TabIndex = 1;
             this.button3.Text = "Delete";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -197,6 +190,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.panel4.Controls.Add(this.txtSearch);
             this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.CarId);
             this.panel4.Controls.Add(this.Numberplate);
@@ -212,6 +206,19 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(716, 329);
             this.panel4.TabIndex = 1;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.txtSearch.Location = new System.Drawing.Point(542, 9);
+            this.txtSearch.MaxLength = 100;
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(160, 26);
+            this.txtSearch.TabIndex = 17;
+            this.txtSearch.TabStop = false;
+            this.txtSearch.Tag = "";
+            this.txtSearch.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Search_KeyPress);
             // 
             // label6
             // 
@@ -238,7 +245,6 @@
             this.Numberplate.Name = "Numberplate";
             this.Numberplate.Size = new System.Drawing.Size(275, 20);
             this.Numberplate.TabIndex = 14;
-            this.Numberplate.TextChanged += new System.EventHandler(this.Numberplate_TextChanged);
             // 
             // Opgave
             // 
@@ -272,7 +278,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(23, 222);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(562, 98);
+            this.dataGridView2.Size = new System.Drawing.Size(549, 85);
             this.dataGridView2.TabIndex = 10;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
@@ -329,17 +335,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(998, 749);
+            this.ClientSize = new System.Drawing.Size(998, 492);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "DrivingLog";
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -354,7 +358,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox KMBeforeShift;
@@ -362,7 +365,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
@@ -377,6 +379,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox CarId;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }
 
